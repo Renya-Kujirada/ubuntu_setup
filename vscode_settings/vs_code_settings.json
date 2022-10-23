@@ -1,0 +1,179 @@
+{
+    "editor.fontFamily": "Ricty Diminished", // フォントの指定
+    "editor.minimap.maxColumn": 40, // ミニマップの幅を40文字分に設定
+    "editor.minimap.showSlider": "always",  // ミニマップ上にスライダーを常に表示
+    // editor.wordSeparators: 単語単位での移動を行う場合の区切り文字を指定
+    // 日本語文書で単語移動を使うため、助詞や読点、括弧を区切り文字として指定
+    "editor.wordSeparators": "./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}`~?　、。「」【】『』（）！？てにをはがのともへでや",
+    "editor.wordWrap": "on",
+    "files.eol": "\n",                                 // 改行文字を\nに
+    "files.autoGuessEncoding": true,       // 文字コードを自動的に判別
+    "files.insertFinalNewline": true,         // 保存時にファイルの最後に空行を挿入
+    "files.trimFinalNewlines": true,          // 保存時にファイルの最後に存在する空行を削除
+    "files.trimTrailingWhitespace": true,  // 保存時に行の終端に存在する空白文字を削除
+
+    // markdownだけの例外設定．保存時のファイル終端の空白文字を削除しない
+    "[markdown]": {
+      "editor.wordWrap": "off",
+      "files.trimTrailingWhitespace": false,
+    },
+
+    "workbench.iconTheme": "vscode-icons",          // アイコンのthemeを指定
+    "workbench.editor.enablePreview": false,          // ファイルをクリックすると必ず新規タブで表示
+    "workbench.startupEditor": "newUntitledFile",   // 起動ページを空白ページに
+
+    "emmet.triggerExpansionOnTab": true,
+
+    // 設定: LaTeX Workshop
+    "latex-workshop.message.update.show": false,
+    // LaTeX Workshop ではビルド設定を「Tool」と「Recipe」という2つで考える
+    //   Tool: 実行される1つのコマンド。コマンド (command) と引数 (args) で構成
+    //   Recipe: Tool の組み合わわせを定義する。Tool の組み合わせ (tools) で構成
+
+    // latex-workshop.latex.tools: Tool の定義
+    "latex-workshop.latex.tools": [
+        // latexmk を利用した xelatex によるビルドコマンド
+        {
+          "name": "Latexmk (XeLaTeX)",
+          "command": "latexmk",
+          "args": [
+            "-f", "-gg", "-pv", "-xelatex", "-synctex=1", "-interaction=nonstopmode", "-file-line-error", "%DOCFILE%.tex"
+          ]
+        },
+        // latexmk を利用した uplatex によるビルドコマンド
+        {
+          "name": "Latexmk (upLaTeX)",
+          "command": "latexmk",
+          "args": [
+            "-f", "-gg", "-pv", "-synctex=1", "-interaction=nonstopmode", "-file-line-error", "%DOCFILE%.tex"
+          ]
+        },
+        // latexmk を利用した platex によるビルドコマンド
+        // 古い LaTeX のテンプレートを使いまわしている (ドキュメントクラスが jreport や jsreport ) 場合のため
+        {
+          "name": "Latexmk (pLaTeX)",
+          "command": "latexmk",
+          "args": [
+            "-f", "-gg", "-pv", "-latex='platex'", "-latexoption='-kanji=utf8 -no-guess-input-env'", "-synctex=1", "-interaction=nonstopmode", "-file-line-error", "%DOCFILE%.tex"
+          ]
+        },
+        // latexmk を利用した lualatex によるビルドコマンド
+        {
+          "name": "Latexmk (LuaLaTeX)",
+          "command": "latexmk",
+          "args": [
+            "-f", "-gg", "-pv", "-lualatex", "-synctex=1", "-interaction=nonstopmode", "-file-line-error", "%DOCFILE%.tex"
+          ]
+        },
+        // latexmkを利用せず，pdflatexによるビルドコマンド
+        {
+          "name": "pdflatex",
+          "command": "pdflatex",
+          "args": [
+              "-synctex=1",
+              "-interaction=nonstopmode",
+              "-file-line-error",
+              "%DOC%"
+          ]
+        },
+        // bibtexのビルドコマンド
+        {
+          "name": "bibtex",
+          "command": "bibtex",
+          "args": [
+              "%DOCFILE%"
+          ]
+      }
+    ],
+
+    // latex-workshop.latex.recipes: Recipe の定義
+    "latex-workshop.latex.recipes": [
+        // LaTeX(upLaTeX) で書かれた文書のビルドレシピ
+        {
+          "name": "upLaTeX",
+          "tools": [
+            "Latexmk (upLaTeX)"
+          ]
+        },
+        // XeLaTeX で書かれた文書のビルドレシピ
+        {
+          "name": "XeLaTeX",
+          "tools": [
+            "Latexmk (XeLaTeX)"
+          ]
+        },
+        // LaTeX(pLaTeX) で書かれた文書のビルドレシピ
+        {
+          "name": "pLaTeX",
+          "tools": [
+            "Latexmk (pLaTeX)"
+          ]
+        },
+        // LuaLaTeX で書かれた文書のビルドレシピ
+        {
+          "name": "LuaLaTeX",
+          "tools": [
+            "Latexmk (LuaLaTeX)"
+          ]
+        },
+        // pdfLaTexでのビルドレシピ
+        {
+          "name": "pdflatex -> bibtex -> pdflatex*2",
+          "tools": [
+              "pdflatex",
+              "bibtex",
+              "pdflatex",
+              "pdflatex"
+          ]
+      }
+    ],
+
+    // latex-workshop.latex.magic.args: マジックコメント付きの LaTeX ドキュメントをビルドする設定
+    // '%!TEX' で始まる行はマジックコメントと呼ばれ、LaTeX のビルド時にビルドプログラムに解釈され、
+    // プログラムの挙動を制御する事ができる。
+    // 参考リンク: https://blog.miz-ar.info/2016/11/magic-comments-in-tex/
+    "latex-workshop.latex.magic.args": [
+      "-f", "-gg", "-pv", "-synctex=1", "-interaction=nonstopmode", "-file-line-error", "%DOCFILE%.tex"
+    ],
+
+    // latex-workshop.latex.clean.fileTypes: クリーンアップ時に削除されるファイルの拡張子
+    "latex-workshop.latex.clean.fileTypes": [
+        "*.aux", "*.bbl", "*.blg", "*.idx", "*.ind", "*.lof", "*.lot", "*.out", "*.toc", "*.acn", "*.acr", "*.alg", "*.glg", "*.glo", "*.gls", "*.ist", "*.fls", "*.log", "*.fdb_latexmk", "*.synctex.gz",
+        // for Beamer files
+        "_minted*", "*.nav", "*.snm", "*.vrb",
+    ],
+
+    // latex-workshop.view.pdf.viewer: PDF ビューアの開き方
+    // "tab" オプションを指定すると、今開いているエディタを左右に分割し、右側に生成されたPDFを表示するようにしてくれる
+    // この PDF ビュアーは LaTeX のビルドによって更新されると同期して内容を更新してくれる。
+    "latex-workshop.view.pdf.viewer": "tab",
+
+    // latex-workshop.latex.autoBuild.onSave.enabled: .tex ファイルの保存時に自動的にビルドを行うかどうか
+    // LaTeX ファイルは .tex ファイルを変更後にビルドしないと、PDF ファイル上に変更結果が反映されないため、
+    // .tex ファイルの保存と同時に自動的にビルドを実行する設定があるが、文書が大きくなるに連れてビルドにも
+    // 時間がかかってしまい、ビルドプログラムの負荷がエディタに影響するため、無効化しておく。
+    // "latex-workshop.latex.autoBuild.run": "never",       //  ファイル保存時に自動コンパイルしたくない場合はコメントをはずす
+    "latex-workshop.latex.autoClean.run": "onFailed",       // コンパイルが失敗したときには中間ファイルを削除
+    "editor.fontSize": 15,
+
+    "sshfs.configs": [
+        {
+            "host": "login.t3.gsic.titech.ac.jp",
+            "label": "TSUBAME3.0",
+            "name": "tsubame",
+            "passphrase": true,
+            "privateKeyPath": "$HOME/.ssh/id_rsa",
+            "root": "/gs/hs0/tga-onolab2/hoge",
+            "username": "hoge"
+        },
+        {
+            "host": "iccluster-gw.dis.titech.ac.jp",
+            "label": "OnoLab-Cluster",
+            "name": "iccluster",
+            "passphrase": true,
+            "privateKeyPath": "$HOME/.ssh/id_rsa_iccluster",
+            "root": "/home/hoge",
+            "username": "hoge"
+        }
+    ]
+}
