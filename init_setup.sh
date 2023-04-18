@@ -1,8 +1,11 @@
+# backup .bashrc
+cp ~/.bashrc ~/.bashrc.org
+
 # sudo add-apt-repository -y -n ppa:sicklylife/ppa
 sudo apt update
 sudo apt upgrade -y
 
-# cancel automatic updates 
+# cancel automatic updates
 sudo dpkg-reconfigure --priority=low unattended-upgrades
 
 # tools
@@ -13,6 +16,9 @@ sudo apt install -y ssh
 
 # git
 echo "source /usr/share/bash-completion/completions/git" >> ~/.bashrc
+
+# open alias (same as Mac. You can open the current folder in the terminal using the command "open .")
+echo "alias open='xdg-open'" >> ~/.bashrc
 
 # slack(check latest ver)
 # sudo snap install slack
@@ -43,4 +49,3 @@ sudo apt install ./vscode.deb
 rm -f vscode.deb
 
 source ~/.bashrc
-
