@@ -200,7 +200,42 @@
   "editor.fontSize": 15,
   "editor.formatOnSave": true,
   "git.autofetch": true,
-  "window.zoomLevel": 1,
   "python.formatting.autopep8Args": ["--max-line-length", "150"],
-  "git.suggestSmartCommit": false
+
+  "git.suggestSmartCommit": false,
+  "terminal.integrated.inheritEnv": false,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "security.workspace.trust.untrustedFiles": "open",
+  "notebook.lineNumbers": "on",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // vsnotes setting
+  "vsnotes.noteTitleConvertSpaces": " ",
+  "vsnotes.defaultNoteTitle": "{dt}_{title}.{ext}",
+  "vsnotes.tokens": [
+    {
+      "type": "datetime",
+      "token": "{dt}",
+      "description": "Insert formatted datetime.",
+      "format": "YYYY_MM_DD"
+    },
+    {
+      "type": "title",
+      "token": "{title}",
+      "description": "Insert note title from input box.",
+      "format": "Untitled"
+    },
+    {
+      "type": "extension",
+      "token": "{ext}",
+      "description": "Insert file extension.",
+      "format": "md"
+    }
+  ],
+  "vsnotes.defaultNotePath": "/home/renya/Develop/vsnote",
+  "vsnotes.templates": ["mtg"]
 }
